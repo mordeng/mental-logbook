@@ -76,13 +76,21 @@ export default function DailyCheckInPage() {
   }
 
   const onSubmit = async (data: { feelingText: string; needText: string }) => {
+    console.log('=== FORM SUBMIT CALLED ===')
+    console.log('Form data:', data)
+    console.log('Mood rating:', moodRating)
+    console.log('Selected needs:', Array.from(selectedNeeds))
+    console.log('Custom need:', customNeed)
+
     if (selectedNeeds.size === 0) {
+      console.log('ERROR: No emotional needs selected')
       setError('Please select at least one emotional need')
       return
     }
 
     setIsLoading(true)
     setError("")
+    console.log('Starting API call...')
 
     try {
       const emotionalNeeds = Array.from(selectedNeeds).map(needType => ({
@@ -90,25 +98,35 @@ export default function DailyCheckInPage() {
         customNeed: needType === 'other' ? customNeed : undefined,
       }))
 
+      const payload = {
+        moodRating: moodRating[0],
+        feelingText: data.feelingText,
+        needText: data.needText,
+        emotionalNeeds,
+      }
+      console.log('API payload:', payload)
+
       const response = await fetch("/api/check-ins", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          moodRating: moodRating[0],
-          feelingText: data.feelingText,
-          needText: data.needText,
-          emotionalNeeds,
-        }),
+        body: JSON.stringify(payload),
       })
+
+      console.log('API response status:', response.status)
 
       if (!response.ok) {
         const result = await response.json()
+        console.log('API error response:', result)
         setError(result.error || "Failed to save check-in")
         setIsLoading(false)
         return
       }
 
+      const result = await response.json()
+      console.log('API success response:', result)
+
       // Success - redirect to dashboard
+      console.log('Redirecting to dashboard...')
       router.push("/dashboard?checkin=success")
       router.refresh()
     } catch (err) {
@@ -222,7 +240,12 @@ export default function DailyCheckInPage() {
             )}
 
             <div className="flex gap-4">
-              <Button type="submit" className="flex-1" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="flex-1"
+                disabled={isLoading}
+                onClick={() => console.log('BUTTON CLICKED - Type: submit')}
+              >
                 {isLoading ? "Saving..." : existingCheckIn ? "Update Check-In" : "Save Check-In"}
               </Button>
               <Button
