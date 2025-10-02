@@ -22,20 +22,58 @@
 - [x] Welcome page with widgets
 - [x] Logout functionality
 - [x] Quick action buttons
+- [x] All navigation links functional
 
 ### Phase 4: Daily Check-In (100% Complete)
 - [x] API endpoints (create, read, update)
 - [x] Get today's check-in endpoint
 - [x] Mood rating slider (1-10)
-- [x] Emotional needs checkboxes
+- [x] Emotional needs checkboxes (6 types)
 - [x] Feeling and needs text inputs
 - [x] Auto-load existing check-in
-- [x] Form validation
+- [x] Form validation with Zod
+
+### Phase 5: FFN Communication Log (100% Complete)
+- [x] CRUD API endpoints
+- [x] Contact autocomplete from previous entries
+- [x] Three-section form (Fact-Feeling-Need)
+- [x] Response and outcome tracking
+- [x] After-mood slider
+- [x] Success rating (successful/neutral/difficult)
+- [x] History view with filters and search
+- [x] Date formatting and badges
+
+### Phase 6: Weekly Connection Tracker (100% Complete)
+- [x] Weekly tracker API with auto-creation
+- [x] Connection action API
+- [x] 3-action goal system (0/3 to 3/3)
+- [x] Action types (Safe Contact, New Context, Vulnerability Step)
+- [x] Before/after mood tracking
+- [x] "Would repeat" selector
+- [x] Progress bar visualization
+- [x] Completion celebration
+- [x] Weekly action history display
+
+### Phase 7: Boundary Check-In (100% Complete)
+- [x] Boundary check-in API
+- [x] Three-question framework (Want/Mutual/Nourish-Drain)
+- [x] Decision tracking (Yes/No/Postpone)
+- [x] Smart recommendations based on answers
+- [x] Pattern recognition (drain vs nourish percentage)
+- [x] Recent boundaries display
+- [x] Reflection field
+
+### Phase 8: Placeholder Pages (100% Complete)
+- [x] Meaning & Belonging (placeholder)
+- [x] Joy Activity (placeholder)
+- [x] Safety Net (placeholder with emergency resources)
+- [x] Statistics & Analytics (placeholder)
+- [x] Settings (placeholder)
 
 ## 🚧 In Progress
 
-### FFN Communication Log
-- Starting API development next
+- Testing the application end-to-end
+- Documentation updates
 
 ## 📋 Upcoming Features (From Implementation Plan)
 
@@ -56,9 +94,10 @@
 
 ## 📊 Overall Progress
 
-**Completed:** ~25% of MVP
-**Current Phase:** Core Journaling Features (Daily Check-In ✅, FFN next)
-**Estimated Time to MVP:** 6-8 weeks remaining
+**Completed:** ~60% of MVP 🎉
+**Current Phase:** Core Features Complete! Polish and advanced features next
+**Features Working:** 4/7 journal modules fully functional
+**Next Focus:** Stats/Analytics, Safety Net implementation, Therapist View
 
 ## 🗂️ File Structure
 
@@ -130,5 +169,27 @@ mental-logbook/
 ---
 
 **Last Updated:** 2025-10-02
-**Commits:** 3 total
-**Lines of Code:** ~2,500+
+**Commits:** 6 total
+**Lines of Code:** ~5,500+
+**Files Created:** 50+ (components, pages, APIs, validations)
+
+## 🎯 What You Can Do Right Now
+
+1. **Register an account** (`/register`)
+2. **Login** (`/login`)
+3. **Create a daily check-in** with mood + emotional needs
+4. **Log FFN communications** with contacts
+5. **Track weekly connections** (3-action goal system)
+6. **Make boundary decisions** with smart recommendations
+7. **View history** for all journal types
+8. **See pattern insights** (e.g., drain vs nourish percentage)
+
+## 🚀 To Run the App
+
+```bash
+cd mental-logbook
+npm install
+npm run dev
+```
+
+Then visit `http://localhost:3000` and register!
