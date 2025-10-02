@@ -75,7 +75,7 @@ export default function DailyCheckInPage() {
     setSelectedNeeds(newNeeds)
   }
 
-  const onSubmit = async (data: Omit<DailyCheckInInput, 'moodRating' | 'emotionalNeeds'>) => {
+  const onSubmit = async (data: { feelingText: string; needText: string }) => {
     if (selectedNeeds.size === 0) {
       setError('Please select at least one emotional need')
       return
@@ -104,6 +104,7 @@ export default function DailyCheckInPage() {
       if (!response.ok) {
         const result = await response.json()
         setError(result.error || "Failed to save check-in")
+        setIsLoading(false)
         return
       }
 
@@ -111,8 +112,8 @@ export default function DailyCheckInPage() {
       router.push("/dashboard?checkin=success")
       router.refresh()
     } catch (err) {
+      console.error('Check-in error:', err)
       setError("An unexpected error occurred")
-    } finally {
       setIsLoading(false)
     }
   }
