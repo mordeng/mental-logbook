@@ -77,10 +77,25 @@
 - [x] Time period selector (7/14/30/90 days)
 - [x] Overview cards with key metrics
 
-### Phase 9: Placeholder Pages (100% Complete)
+### Phase 9: Safety Net (100% Complete)
+- [x] Safe Contacts CRUD API (max 3 contacts)
+- [x] Crisis Actions CRUD API
+- [x] Crisis Log API for tracking events
+- [x] SafeContactsManager component (add/edit/delete with phone)
+- [x] CrisisActionsManager component with quick-start actions
+- [x] Comprehensive Safety Net page with:
+  - 24/7 crisis hotlines and resources
+  - Safe contacts management
+  - Crisis action plan builder
+  - 5-4-3-2-1 grounding exercise
+  - 4-7-8 breathing technique
+- [x] CrisisModal with all resources
+- [x] Always-visible "Need Help" button in navigation
+- [x] Crisis access logging for therapist awareness
+
+### Phase 10: Placeholder Pages (100% Complete)
 - [x] Meaning & Belonging (placeholder)
 - [x] Joy Activity (placeholder)
-- [x] Safety Net (placeholder with emergency resources)
 - [x] Settings (placeholder)
 
 ## 🚧 In Progress
@@ -90,11 +105,11 @@
 ## 📋 Upcoming Features (From Implementation Plan)
 
 ### Immediate Next Steps:
-1. Safety Net Implementation (CRUD for safe contacts, crisis actions, grounding exercises)
-2. Meaning & Belonging Journal (API + UI)
-3. Joy Activity Tracker (API + UI)
-4. Therapist View with Privacy Controls
-5. Search Functionality
+1. Meaning & Belonging Journal (API + UI)
+2. Joy Activity Tracker (API + UI)
+3. Therapist View with Privacy Controls
+4. Search Functionality
+5. Settings Page (profile, password, therapist passcode)
 6. Mobile Optimization Pass
 
 ### Later Phases:
@@ -105,10 +120,10 @@
 
 ## 📊 Overall Progress
 
-**Completed:** ~70% of MVP 🎉
-**Current Phase:** Analytics Complete! Moving to Safety Net and remaining journal modules
-**Features Working:** 4/7 journal modules + full analytics dashboard
-**Next Focus:** Safety Net implementation, Meaning & Belonging, Joy Activity tracker
+**Completed:** ~75% of MVP 🎉
+**Current Phase:** Safety Net Complete! Moving to Meaning & Belonging and Joy Activity
+**Features Working:** 5/7 journal modules + full analytics dashboard + safety net
+**Next Focus:** Meaning & Belonging, Joy Activity tracker, Settings
 
 ## 🗂️ File Structure
 
