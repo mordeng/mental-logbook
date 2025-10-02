@@ -51,7 +51,7 @@ export default function DailyCheckInPage() {
           setMoodRating([data.checkIn.moodRating])
           setValue('feelingText', data.checkIn.feelingText)
           setValue('needText', data.checkIn.needText)
-          const needs = new Set(data.checkIn.emotionalNeeds.map((n: any) => n.needType))
+          const needs = new Set<string>(data.checkIn.emotionalNeeds.map((n: any) => n.needType))
           setSelectedNeeds(needs)
           const other = data.checkIn.emotionalNeeds.find((n: any) => n.needType === 'other')
           if (other?.customNeed) {

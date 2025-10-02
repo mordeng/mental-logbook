@@ -159,7 +159,7 @@ export default function FFNLogPage() {
                 <Label htmlFor="fact">Fact: What happened?</Label>
                 <Textarea
                   id="fact"
-                  placeholder='Example: "We haven\'t spoken in a while."'
+                  placeholder="Example: We haven't spoken in a while."
                   rows={3}
                   {...register("fact")}
                 />
@@ -185,7 +185,7 @@ export default function FFNLogPage() {
                 <Label htmlFor="need">Need: What you need</Label>
                 <Textarea
                   id="need"
-                  placeholder='Example: "I\'d like us to check in more often."'
+                  placeholder="Example: I'd like us to check in more often."
                   rows={3}
                   {...register("need")}
                 />

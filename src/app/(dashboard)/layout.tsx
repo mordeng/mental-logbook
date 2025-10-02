@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import CrisisButton from "@/components/shared/CrisisButton"
 
 export default async function DashboardLayout({
   children,
@@ -41,6 +42,7 @@ export default async function DashboardLayout({
             </div>
           </div>
           <div className="flex items-center space-x-4">
+            <CrisisButton />
             <span className="text-sm text-muted-foreground">
               {session.user?.name || session.user?.email}
             </span>
