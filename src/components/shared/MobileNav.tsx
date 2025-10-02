@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import CrisisButton from './CrisisButton';
+import { handleSignOut } from '@/lib/actions';
 import { Menu, X, Home, BookOpen, BarChart3, Shield, Settings as SettingsIcon, ChevronDown } from 'lucide-react';
 
 interface MobileNavProps {
@@ -83,11 +84,7 @@ export default function MobileNav({ session }: MobileNavProps) {
           <span className="text-sm text-muted-foreground hidden xl:inline">
             {session.user?.name || session.user?.email}
           </span>
-          <form action={async () => {
-            "use server"
-            const { signOut } = await import("@/lib/auth")
-            await signOut()
-          }}>
+          <form action={handleSignOut}>
             <Button type="submit" variant="outline" size="sm">
               Logout
             </Button>
@@ -167,11 +164,7 @@ export default function MobileNav({ session }: MobileNavProps) {
               <div className="px-4 py-2 text-sm text-muted-foreground">
                 {session.user?.name || session.user?.email}
               </div>
-              <form action={async () => {
-                "use server"
-                const { signOut } = await import("@/lib/auth")
-                await signOut()
-              }}>
+              <form action={handleSignOut}>
                 <Button type="submit" variant="outline" className="w-full" size="lg">
                   Logout
                 </Button>
