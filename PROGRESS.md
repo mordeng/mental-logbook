@@ -93,9 +93,26 @@
 - [x] Always-visible "Need Help" button in navigation
 - [x] Crisis access logging for therapist awareness
 
-### Phase 10: Placeholder Pages (100% Complete)
+### Phase 10: Joy Activity Tracker (100% Complete)
+- [x] Joy Activity CRUD API
+- [x] Streak calculation (consecutive weeks)
+- [x] JoyActivityForm component with:
+  - Weekly activity planner
+  - Completion tracking
+  - Joy rating slider (1-10)
+  - Notes for reflections
+- [x] Joy Activity page with:
+  - Current week activity manager
+  - Streak counter display
+  - Week date range
+  - Recent completions counter
+  - 16 joy activity suggestions
+  - Activity history with ratings and notes
+- [x] Auto-create for current week
+- [x] Completion and rating tracking
+
+### Phase 11: Placeholder Pages (Partial)
 - [x] Meaning & Belonging (placeholder)
-- [x] Joy Activity (placeholder)
 - [x] Settings (placeholder)
 
 ## 🚧 In Progress
@@ -106,11 +123,10 @@
 
 ### Immediate Next Steps:
 1. Meaning & Belonging Journal (API + UI)
-2. Joy Activity Tracker (API + UI)
+2. Settings Page (profile, password, therapist passcode)
 3. Therapist View with Privacy Controls
 4. Search Functionality
-5. Settings Page (profile, password, therapist passcode)
-6. Mobile Optimization Pass
+5. Mobile Optimization Pass
 
 ### Later Phases:
 - Advanced analytics features
@@ -120,10 +136,10 @@
 
 ## 📊 Overall Progress
 
-**Completed:** ~75% of MVP 🎉
-**Current Phase:** Safety Net Complete! Moving to Meaning & Belonging and Joy Activity
-**Features Working:** 5/7 journal modules + full analytics dashboard + safety net
-**Next Focus:** Meaning & Belonging, Joy Activity tracker, Settings
+**Completed:** ~80% of MVP 🎉
+**Current Phase:** Joy Activity Complete! Moving to Meaning & Belonging
+**Features Working:** 6/7 journal modules + full analytics dashboard + safety net
+**Next Focus:** Meaning & Belonging (final core feature), Settings, Polish
 
 ## 🗂️ File Structure
 
