@@ -70,20 +70,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    async authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isAuthPage = nextUrl.pathname.startsWith("/login") ||
-        nextUrl.pathname.startsWith("/register") ||
-        nextUrl.pathname.startsWith("/therapist-login")
-
-      // Allow auth pages when not logged in
-      if (isAuthPage) {
-        return !isLoggedIn
-      }
-
-      // Require auth for all other matched routes
-      return isLoggedIn
-    },
   },
   pages: {
     signIn: "/login",
