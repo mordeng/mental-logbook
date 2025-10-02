@@ -36,9 +36,14 @@ export default function DailyCheckInPage() {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<DailyCheckInInput>({
-    resolver: zodResolver(dailyCheckInSchema),
+  } = useForm({
+    // Removed resolver - we'll validate manually
   })
+
+  // Log errors whenever they change
+  useEffect(() => {
+    console.log('Form errors:', errors)
+  }, [errors])
 
   // Load today's check-in if it exists
   useEffect(() => {
@@ -153,7 +158,11 @@ export default function DailyCheckInPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={(e) => {
+            console.log('FORM ONSUBMIT EVENT TRIGGERED')
+            e.preventDefault()
+            handleSubmit(onSubmit)(e)
+          }} className="space-y-6">
             <div className="space-y-4">
               <div>
                 <Label className="text-base">
