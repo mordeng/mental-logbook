@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { dailyCheckInSchema } from '@/lib/validations/check-in'
 import { startOfDay } from 'date-fns'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: Request) {
   try {
     const session = await auth()

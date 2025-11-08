@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic'
+
 const therapistPasscodeSchema = z.object({
   passcode: z.string().regex(/^\d{6}$/, 'Passcode must be exactly 6 digits'),
 });
