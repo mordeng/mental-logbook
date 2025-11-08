@@ -18,7 +18,20 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts"
-import { Calendar, TrendingUp, Heart, Users, Shield, Smile, Download } from "lucide-react"
+import { Calendar, TrendingUp, Heart, Users, Shield, Smile, Download, ChevronDown, ChevronUp } from "lucide-react"
+import { format } from "date-fns"
+
+interface DailyCheckIn {
+  id: string
+  date: string
+  moodRating: number
+  feelingText: string
+  needText: string
+  emotionalNeeds: Array<{
+    needType: string
+    customNeed: string | null
+  }>
+}
 
 interface AnalyticsData {
   overview: {
@@ -67,9 +80,13 @@ export default function StatsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [days, setDays] = useState(30)
+  const [checkIns, setCheckIns] = useState<DailyCheckIn[]>([])
+  const [checkInsLoading, setCheckInsLoading] = useState(true)
+  const [showAllCheckIns, setShowAllCheckIns] = useState(false)
 
   useEffect(() => {
     fetchAnalytics()
+    fetchCheckIns()
   }, [days])
 
   const fetchAnalytics = async () => {
@@ -84,6 +101,21 @@ export default function StatsPage() {
       console.error("Failed to fetch analytics:", error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchCheckIns = async () => {
+    try {
+      setCheckInsLoading(true)
+      const res = await fetch(`/api/check-ins?limit=100`)
+      if (res.ok) {
+        const data = await res.json()
+        setCheckIns(data.checkIns || [])
+      }
+    } catch (error) {
+      console.error("Failed to fetch check-ins:", error)
+    } finally {
+      setCheckInsLoading(false)
     }
   }
 
@@ -476,6 +508,112 @@ export default function StatsPage() {
           </Card>
         )}
       </div>
+
+      {/* Daily Check-Ins History */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5" />
+            Daily Check-In History
+          </CardTitle>
+          <CardDescription>Your past daily mood and emotional check-ins</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {checkInsLoading ? (
+            <p className="text-sm text-muted-foreground">Loading check-ins...</p>
+          ) : checkIns.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No check-ins yet. Start tracking your mood!</p>
+          ) : (
+            <div className="space-y-4">
+              {(showAllCheckIns ? checkIns : checkIns.slice(0, 10)).map((checkIn) => (
+                <div
+                  key={checkIn.id}
+                  className="border rounded-lg p-4 space-y-3 hover:bg-slate-50 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <p className="font-semibold">
+                          {format(new Date(checkIn.date), "EEEE, MMMM d, yyyy")}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Mood:</span>
+                      <span
+                        className={`text-2xl font-bold ${
+                          checkIn.moodRating >= 8
+                            ? "text-green-600"
+                            : checkIn.moodRating >= 5
+                            ? "text-yellow-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        {checkIn.moodRating}/10
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
+                        How I felt:
+                      </p>
+                      <p className="text-sm">{checkIn.feelingText}</p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
+                        What I needed:
+                      </p>
+                      <p className="text-sm">{checkIn.needText}</p>
+                    </div>
+
+                    {checkIn.emotionalNeeds.length > 0 && (
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground mb-2">
+                          Emotional needs:
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {checkIn.emotionalNeeds.map((need, idx) => (
+                            <span
+                              key={idx}
+                              className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium"
+                            >
+                              {need.customNeed || need.needType.replace(/_/g, " ")}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {checkIns.length > 10 && (
+                <Button
+                  onClick={() => setShowAllCheckIns(!showAllCheckIns)}
+                  variant="outline"
+                  className="w-full"
+                >
+                  {showAllCheckIns ? (
+                    <>
+                      <ChevronUp className="mr-2 h-4 w-4" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="mr-2 h-4 w-4" />
+                      Show All ({checkIns.length} total)
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }
