@@ -200,7 +200,7 @@ export default function TherapistDashboard() {
             <CardDescription>Fact-Feeling-Need practice</CardDescription>
           </CardHeader>
           <CardContent>
-            {data.recentData.ffnLogs.length === 0 ? (
+            {!data.recentData.ffnLogs || data.recentData.ffnLogs.length === 0 ? (
               <p className="text-sm text-muted-foreground">No FFN logs yet</p>
             ) : (
               <div className="space-y-3">
@@ -237,7 +237,7 @@ export default function TherapistDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {data.recentData.crisisLogs.map((log) => (
+                {data.recentData.crisisLogs?.map((log) => (
                   <div key={log.id} className="bg-red-50 border border-red-200 rounded-lg p-3">
                     <p className="text-sm font-semibold text-red-900">
                       {format(new Date(log.timestamp), 'MMM d, yyyy h:mm a')}
