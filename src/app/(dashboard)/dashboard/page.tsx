@@ -28,20 +28,6 @@ export default async function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Weekly Connections</CardTitle>
-            <CardDescription>Track your social interactions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">0/3</div>
-            <p className="text-sm text-muted-foreground">Actions this week</p>
-            <Link href="/journal/weekly-tracker">
-              <Button className="mt-4 w-full" variant="outline">View Tracker</Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
             <CardTitle>Streak</CardTitle>
             <CardDescription>Daily check-in consistency</CardDescription>
           </CardHeader>
@@ -50,34 +36,31 @@ export default async function DashboardPage() {
             <p className="text-sm text-muted-foreground">Keep it going!</p>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Progress</CardTitle>
+            <CardDescription>View your mental health journey</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/stats">
+              <Button className="w-full" variant="outline">View Stats</Button>
+            </Link>
+          </CardContent>
+        </Card>
       </div>
 
       <div>
         <h2 className="mb-4 text-2xl font-bold">Quick Actions</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Link href="/journal/check-in">
             <Button variant="outline" className="w-full">Daily Check-In</Button>
           </Link>
-          <Link href="/journal/ffn">
-            <Button variant="outline" className="w-full">FFN Log</Button>
-          </Link>
-          <Link href="/journal/weekly-tracker">
-            <Button variant="outline" className="w-full">Weekly Tracker</Button>
-          </Link>
-          <Link href="/journal/boundary">
-            <Button variant="outline" className="w-full">Boundary Check</Button>
-          </Link>
-          <Link href="/journal/meaning">
-            <Button variant="outline" className="w-full">Meaning & Belonging</Button>
-          </Link>
-          <Link href="/journal/joy">
-            <Button variant="outline" className="w-full">Joy Activity</Button>
-          </Link>
-          <Link href="/safety">
-            <Button variant="outline" className="w-full">Safety Net</Button>
-          </Link>
           <Link href="/stats">
             <Button variant="outline" className="w-full">View Stats</Button>
+          </Link>
+          <Link href="/settings">
+            <Button variant="outline" className="w-full">Settings</Button>
           </Link>
         </div>
       </div>

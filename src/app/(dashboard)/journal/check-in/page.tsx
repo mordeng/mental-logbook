@@ -22,6 +22,11 @@ const emotionalNeedOptions = [
   { value: 'other', label: 'Other' },
 ] as const
 
+type CheckInFormData = {
+  feelingText: string
+  needText: string
+}
+
 export default function DailyCheckInPage() {
   const router = useRouter()
   const [moodRating, setMoodRating] = useState([5])
@@ -36,7 +41,7 @@ export default function DailyCheckInPage() {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<CheckInFormData>({
     // Removed resolver - we'll validate manually
   })
 
@@ -80,7 +85,7 @@ export default function DailyCheckInPage() {
     setSelectedNeeds(newNeeds)
   }
 
-  const onSubmit = async (data: { feelingText: string; needText: string }) => {
+  const onSubmit = async (data: CheckInFormData) => {
     console.log('=== FORM SUBMIT CALLED ===')
     console.log('Form data:', data)
     console.log('Mood rating:', moodRating)
