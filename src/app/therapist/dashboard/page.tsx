@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, TrendingUp, Calendar, Activity, Heart, AlertTriangle, LogOut } from 'lucide-react';
+import { Shield, TrendingUp, Calendar, Activity, Heart, AlertTriangle, LogOut, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface TherapistSession {
@@ -44,6 +44,7 @@ export default function TherapistDashboard() {
   const [session, setSession] = useState<TherapistSession | null>(null);
   const [data, setData] = useState<PatientData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showAllCheckIns, setShowAllCheckIns] = useState(false);
 
   useEffect(() => {
     // Check for therapist session
@@ -165,29 +166,97 @@ export default function TherapistDashboard() {
         {/* Recent Check-Ins */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Daily Check-Ins</CardTitle>
-            <CardDescription>Last 30 days of mood tracking</CardDescription>
+            <CardTitle>Daily Check-Ins History</CardTitle>
+            <CardDescription>Patient mood tracking over time</CardDescription>
           </CardHeader>
           <CardContent>
             {data.recentData.checkIns.length === 0 ? (
               <p className="text-sm text-muted-foreground">No check-ins yet</p>
             ) : (
-              <div className="space-y-3">
-                {data.recentData.checkIns.slice(0, 5).map((checkIn) => (
-                  <div key={checkIn.id} className="border-l-4 border-blue-500 pl-4 py-2">
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="text-sm font-semibold">
-                        {format(new Date(checkIn.date), 'MMM d, yyyy')}
-                      </p>
-                      <span className="text-lg font-bold text-blue-600">
-                        {checkIn.moodRating}/10
-                      </span>
+              <div className="space-y-4">
+                {(showAllCheckIns ? data.recentData.checkIns : data.recentData.checkIns.slice(0, 5)).map((checkIn) => (
+                  <div
+                    key={checkIn.id}
+                    className="border rounded-lg p-4 space-y-3 hover:bg-slate-50 transition-colors"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <p className="font-semibold">
+                          {format(new Date(checkIn.date), 'EEEE, MMMM d, yyyy')}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Mood:</span>
+                        <span
+                          className={`text-2xl font-bold ${
+                            checkIn.moodRating >= 8
+                              ? 'text-green-600'
+                              : checkIn.moodRating >= 5
+                              ? 'text-yellow-600'
+                              : 'text-red-600'
+                          }`}
+                        >
+                          {checkIn.moodRating}/10
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {checkIn.feelingText}
-                    </p>
+
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground mb-1">
+                          How they felt:
+                        </p>
+                        <p className="text-sm">{checkIn.feelingText}</p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground mb-1">
+                          What they needed:
+                        </p>
+                        <p className="text-sm">{checkIn.needText}</p>
+                      </div>
+
+                      {checkIn.emotionalNeeds && checkIn.emotionalNeeds.length > 0 && (
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground mb-2">
+                            Emotional needs:
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {checkIn.emotionalNeeds.map((need: any, idx: number) => (
+                              <span
+                                key={idx}
+                                className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium"
+                              >
+                                {need.customNeed || need.needType.replace(/_/g, ' ')}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
+
+                {data.recentData.checkIns.length > 5 && (
+                  <Button
+                    onClick={() => setShowAllCheckIns(!showAllCheckIns)}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    {showAllCheckIns ? (
+                      <>
+                        <ChevronUp className="mr-2 h-4 w-4" />
+                        Show Less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="mr-2 h-4 w-4" />
+                        Show All ({data.recentData.checkIns.length} total)
+                      </>
+                    )}
+                  </Button>
+                )}
               </div>
             )}
           </CardContent>
