@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { startOfDay, subDays, startOfWeek, subWeeks, format } from "date-fns"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   try {
     const session = await auth()
@@ -81,10 +83,39 @@ export async function GET(req: NextRequest) {
         totalCheckIns: checkIns.length,
         currentStreak,
         avgMood: Math.round(avgMood * 10) / 10,
+        totalFFNLogs: 0,
+        totalBoundaries: 0,
       },
       moodTimeline,
       emotionalNeedsDistribution,
-      activityHeatmap: last7Days,
+      weeklyConnection: {
+        completionRate: 0,
+        completedWeeks: 0,
+        totalWeeks: 0,
+        avgMoodImprovement: 0,
+      },
+      ffnStats: {
+        successRate: 0,
+        successful: 0,
+        total: 0,
+      },
+      boundaryStats: {
+        decisions: { yes: 0, no: 0, postpone: 0 },
+        drainPercentage: 0,
+        draining: 0,
+        nourishing: 0,
+      },
+      joyStats: {
+        completionRate: 0,
+        completed: 0,
+        total: 0,
+        avgRating: 0,
+      },
+      activityHeatmap: last7Days.map(day => ({
+        ...day,
+        ffn: 0,
+        boundary: 0,
+      })),
     })
   } catch (error) {
     console.error("Analytics error:", error)

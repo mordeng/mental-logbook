@@ -132,9 +132,9 @@ export default function StatsPage() {
   }
 
   const boundaryDecisionData = [
-    { name: "Yes", value: data.boundaryStats.decisions.yes, color: "#10b981" },
-    { name: "No", value: data.boundaryStats.decisions.no, color: "#ef4444" },
-    { name: "Postpone", value: data.boundaryStats.decisions.postpone, color: "#f59e0b" },
+    { name: "Yes", value: data.boundaryStats?.decisions?.yes || 0, color: "#10b981" },
+    { name: "No", value: data.boundaryStats?.decisions?.no || 0, color: "#ef4444" },
+    { name: "Postpone", value: data.boundaryStats?.decisions?.postpone || 0, color: "#f59e0b" },
   ].filter((item) => item.value > 0)
 
   return (
@@ -206,7 +206,7 @@ export default function StatsPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.overview.totalFFNLogs}</div>
+            <div className="text-2xl font-bold">{data.overview.totalFFNLogs || 0}</div>
             <p className="text-xs text-muted-foreground">FFN logs</p>
           </CardContent>
         </Card>
@@ -217,7 +217,7 @@ export default function StatsPage() {
             <Shield className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.overview.totalBoundaries}</div>
+            <div className="text-2xl font-bold">{data.overview.totalBoundaries || 0}</div>
             <p className="text-xs text-muted-foreground">decisions made</p>
           </CardContent>
         </Card>
@@ -325,27 +325,27 @@ export default function StatsPage() {
           <CardContent className="space-y-3">
             <div>
               <div className="text-2xl font-bold">
-                {data.weeklyConnection.completionRate}%
+                {data.weeklyConnection?.completionRate || 0}%
               </div>
               <p className="text-sm text-muted-foreground">completion rate</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm">
-                <span className="font-medium">{data.weeklyConnection.completedWeeks}</span> of{" "}
-                <span className="font-medium">{data.weeklyConnection.totalWeeks}</span> weeks
+                <span className="font-medium">{data.weeklyConnection?.completedWeeks || 0}</span> of{" "}
+                <span className="font-medium">{data.weeklyConnection?.totalWeeks || 0}</span> weeks
                 completed
               </p>
               <p className="text-sm">
                 Avg mood change:{" "}
                 <span
                   className={`font-medium ${
-                    data.weeklyConnection.avgMoodImprovement > 0
+                    (data.weeklyConnection?.avgMoodImprovement || 0) > 0
                       ? "text-green-600"
                       : "text-red-600"
                   }`}
                 >
-                  {data.weeklyConnection.avgMoodImprovement > 0 ? "+" : ""}
-                  {data.weeklyConnection.avgMoodImprovement}
+                  {(data.weeklyConnection?.avgMoodImprovement || 0) > 0 ? "+" : ""}
+                  {data.weeklyConnection?.avgMoodImprovement || 0}
                 </span>
               </p>
             </div>
@@ -362,18 +362,18 @@ export default function StatsPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <div className="text-2xl font-bold">{data.ffnStats.successRate}%</div>
+              <div className="text-2xl font-bold">{data.ffnStats?.successRate || 0}%</div>
               <p className="text-sm text-muted-foreground">success rate</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm">
                 <span className="font-medium text-green-600">
-                  {data.ffnStats.successful}
+                  {data.ffnStats?.successful || 0}
                 </span>{" "}
                 successful communications
               </p>
               <p className="text-sm text-muted-foreground">
-                out of {data.ffnStats.total} total
+                out of {data.ffnStats?.total || 0} total
               </p>
             </div>
           </CardContent>
@@ -389,21 +389,21 @@ export default function StatsPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <div className="text-2xl font-bold">{data.boundaryStats.drainPercentage}%</div>
+              <div className="text-2xl font-bold">{data.boundaryStats?.drainPercentage || 0}%</div>
               <p className="text-sm text-muted-foreground">situations drain you</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm">
                 <span className="font-medium text-green-600">
-                  {data.boundaryStats.decisions.yes}
+                  {data.boundaryStats?.decisions?.yes || 0}
                 </span>{" "}
                 yes,{" "}
                 <span className="font-medium text-red-600">
-                  {data.boundaryStats.decisions.no}
+                  {data.boundaryStats?.decisions?.no || 0}
                 </span>{" "}
                 no,{" "}
                 <span className="font-medium text-amber-600">
-                  {data.boundaryStats.decisions.postpone}
+                  {data.boundaryStats?.decisions?.postpone || 0}
                 </span>{" "}
                 postponed
               </p>
@@ -412,7 +412,7 @@ export default function StatsPage() {
         </Card>
 
         {/* Joy Activity Stats */}
-        {data.joyStats.total > 0 && (
+        {(data.joyStats?.total || 0) > 0 && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -423,19 +423,19 @@ export default function StatsPage() {
             <CardContent className="space-y-3">
               <div>
                 <div className="text-2xl font-bold">
-                  {data.joyStats.completionRate}%
+                  {data.joyStats?.completionRate || 0}%
                 </div>
                 <p className="text-sm text-muted-foreground">completion rate</p>
               </div>
               <div className="space-y-1">
                 <p className="text-sm">
-                  <span className="font-medium">{data.joyStats.completed}</span> of{" "}
-                  <span className="font-medium">{data.joyStats.total}</span> completed
+                  <span className="font-medium">{data.joyStats?.completed || 0}</span> of{" "}
+                  <span className="font-medium">{data.joyStats?.total || 0}</span> completed
                 </p>
-                {data.joyStats.avgRating > 0 && (
+                {(data.joyStats?.avgRating || 0) > 0 && (
                   <p className="text-sm">
                     Avg rating:{" "}
-                    <span className="font-medium">{data.joyStats.avgRating}/10</span>
+                    <span className="font-medium">{data.joyStats?.avgRating || 0}/10</span>
                   </p>
                 )}
               </div>
