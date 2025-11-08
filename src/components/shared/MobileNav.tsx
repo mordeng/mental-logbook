@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import CrisisButton from './CrisisButton';
 import { handleSignOut } from '@/lib/actions';
-import { Menu, X, Home, BookOpen, BarChart3, Shield, Settings as SettingsIcon, ChevronDown } from 'lucide-react';
+import { Menu, X, Home, BarChart3, Settings as SettingsIcon, BookOpen } from 'lucide-react';
 
 interface MobileNavProps {
   session: any;
@@ -13,16 +12,6 @@ interface MobileNavProps {
 
 export default function MobileNav({ session }: MobileNavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [journalOpen, setJournalOpen] = useState(false);
-
-  const journalLinks = [
-    { href: '/journal/check-in', label: 'Daily Check-In' },
-    { href: '/journal/ffn', label: 'FFN Communication' },
-    { href: '/journal/weekly-tracker', label: 'Weekly Connections' },
-    { href: '/journal/boundary', label: 'Boundary Check-In' },
-    { href: '/journal/meaning', label: 'Meaning & Belonging' },
-    { href: '/journal/joy', label: 'Joy Activity' },
-  ];
 
   return (
     <nav className="border-b bg-white sticky top-0 z-50">
@@ -42,20 +31,12 @@ export default function MobileNav({ session }: MobileNavProps) {
               </Button>
             </Link>
 
-            <div className="relative group">
-              <Button variant="ghost" size="sm" className="cursor-pointer">
+            <Link href="/journal/check-in">
+              <Button variant="ghost" size="sm">
                 <BookOpen className="h-4 w-4 mr-2" />
-                Journal
-                <ChevronDown className="h-4 w-4 ml-2" />
+                Daily Check-In
               </Button>
-              <div className="absolute left-0 mt-2 w-56 bg-white border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                {journalLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="block px-4 py-2 hover:bg-slate-100 text-sm">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            </Link>
 
             <Link href="/stats">
               <Button variant="ghost" size="sm">
@@ -63,12 +44,7 @@ export default function MobileNav({ session }: MobileNavProps) {
                 Stats
               </Button>
             </Link>
-            <Link href="/safety">
-              <Button variant="ghost" size="sm">
-                <Shield className="h-4 w-4 mr-2" />
-                Safety
-              </Button>
-            </Link>
+
             <Link href="/settings">
               <Button variant="ghost" size="sm">
                 <SettingsIcon className="h-4 w-4 mr-2" />
@@ -80,7 +56,6 @@ export default function MobileNav({ session }: MobileNavProps) {
 
         {/* Right Side - Desktop */}
         <div className="hidden lg:flex items-center space-x-4">
-          <CrisisButton />
           <span className="text-sm text-muted-foreground hidden xl:inline">
             {session.user?.name || session.user?.email}
           </span>
@@ -93,7 +68,6 @@ export default function MobileNav({ session }: MobileNavProps) {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 lg:hidden">
-          <CrisisButton />
           <Button
             variant="ghost"
             size="sm"
@@ -115,41 +89,17 @@ export default function MobileNav({ session }: MobileNavProps) {
               </Button>
             </Link>
 
-            <div>
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                size="lg"
-                onClick={() => setJournalOpen(!journalOpen)}
-              >
+            <Link href="/journal/check-in" onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="ghost" className="w-full justify-start" size="lg">
                 <BookOpen className="h-5 w-5 mr-3" />
-                Journal
-                <ChevronDown className={`h-5 w-5 ml-auto transition-transform ${journalOpen ? 'rotate-180' : ''}`} />
+                Daily Check-In
               </Button>
-              {journalOpen && (
-                <div className="ml-6 mt-2 space-y-1">
-                  {journalLinks.map((link) => (
-                    <Link key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
-                        {link.label}
-                      </Button>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            </Link>
 
             <Link href="/stats" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="ghost" className="w-full justify-start" size="lg">
                 <BarChart3 className="h-5 w-5 mr-3" />
                 Stats
-              </Button>
-            </Link>
-
-            <Link href="/safety" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start" size="lg">
-                <Shield className="h-5 w-5 mr-3" />
-                Safety
               </Button>
             </Link>
 

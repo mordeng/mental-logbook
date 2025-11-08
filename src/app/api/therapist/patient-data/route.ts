@@ -26,54 +26,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
-    // Get recent data from all modules (last 30 days)
+    // Get recent check-ins (last 30 days)
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const [
-      checkIns,
-      ffnLogs,
-      weeklyTrackers,
-      boundaryCheckIns,
-      meaningGoals,
-      joyActivities,
-      crisisLogs,
-    ] = await Promise.all([
-      prisma.dailyCheckIn.findMany({
-        where: { userId: patientId, date: { gte: thirtyDaysAgo } },
-        orderBy: { date: 'desc' },
-        take: 30,
-      }),
-      prisma.fFNLog.findMany({
-        where: { userId: patientId, date: { gte: thirtyDaysAgo } },
-        orderBy: { date: 'desc' },
-        take: 20,
-      }),
-      prisma.weeklyTracker.findMany({
-        where: { userId: patientId, weekStartDate: { gte: thirtyDaysAgo } },
-        include: { actions: true },
-        orderBy: { weekStartDate: 'desc' },
-      }),
-      prisma.boundaryCheckIn.findMany({
-        where: { userId: patientId, date: { gte: thirtyDaysAgo } },
-        orderBy: { date: 'desc' },
-        take: 20,
-      }),
-      prisma.meaningGoal.findMany({
-        where: { userId: patientId },
-        include: { reflections: { orderBy: { date: 'desc' }, take: 5 } },
-        orderBy: { month: 'desc' },
-        take: 3,
-      }),
-      prisma.joyActivity.findMany({
-        where: { userId: patientId, weekStartDate: { gte: thirtyDaysAgo } },
-        orderBy: { weekStartDate: 'desc' },
-      }),
-      prisma.crisisLog.findMany({
-        where: { userId: patientId, timestamp: { gte: thirtyDaysAgo } },
-        orderBy: { timestamp: 'desc' },
-      }),
-    ]);
+    const checkIns = await prisma.dailyCheckIn.findMany({
+      where: { userId: patientId, date: { gte: thirtyDaysAgo } },
+      orderBy: { date: 'desc' },
+      include: { emotionalNeeds: true },
+      take: 30,
+    });
 
     // Calculate summary statistics
     const avgMood = checkIns.length > 0
@@ -88,18 +50,9 @@ export async function GET(request: NextRequest) {
         avgMood: avgMood ? Math.round(avgMood * 10) / 10 : null,
         checkInStreak,
         totalCheckIns: checkIns.length,
-        totalFFNLogs: ffnLogs.length,
-        totalBoundaryCheckIns: boundaryCheckIns.length,
-        crisisEvents: crisisLogs.length,
       },
       recentData: {
         checkIns,
-        ffnLogs,
-        weeklyTrackers,
-        boundaryCheckIns,
-        meaningGoals,
-        joyActivities,
-        crisisLogs,
       },
     });
   } catch (error) {
