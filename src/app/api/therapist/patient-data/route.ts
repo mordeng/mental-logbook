@@ -50,9 +50,18 @@ export async function GET(request: NextRequest) {
         avgMood: avgMood ? Math.round(avgMood * 10) / 10 : null,
         checkInStreak,
         totalCheckIns: checkIns.length,
+        totalFFNLogs: 0,
+        totalBoundaryCheckIns: 0,
+        crisisEvents: 0,
       },
       recentData: {
         checkIns,
+        ffnLogs: [],
+        weeklyTrackers: [],
+        boundaryCheckIns: [],
+        meaningGoals: [],
+        joyActivities: [],
+        crisisLogs: [],
       },
     });
   } catch (error) {
